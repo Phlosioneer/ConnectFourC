@@ -18,5 +18,25 @@
     <ClCompile Include="ConnectFour.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utf8.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="box_glyphs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utf8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

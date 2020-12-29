@@ -154,6 +154,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConnectFour.c" />
+    <ClCompile Include="grid.c" />
+    <ClCompile Include="utf8.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="box_glyphs.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="grid.h" />
+    <ClInclude Include="utf8.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
