@@ -5,5 +5,6 @@
 #pragma once
 
 #include <windows.h>
+#include <stdbool.h>
 
 #endif // !COMMON_H

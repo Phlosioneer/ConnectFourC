@@ -13,7 +13,13 @@ static char* boardBottomLine;
 
 struct Board {
 	char cells[BOARD_WIDTH * BOARD_HEIGHT];
+	char currrentPlayer;
 };
+
+size_t drawLine(IN int start, IN int tee, IN int end, IN size_t buffLen, OUT char* buffer);
+char* drawLineM(IN int start, IN int tee, IN int end);
+size_t drawRow(IN char* const rowData, IN size_t buffLen, OUT char* buffer);
+void toggleCurrentPlayer(Board* board);
 
 Board* newBoard(void) {
 	Board* ret = malloc(sizeof(Board));
@@ -23,6 +29,7 @@ Board* newBoard(void) {
 	}
 
 	memset(&ret->cells, (int)BOARD_EMPTY, sizeof(Board));
+	ret->currrentPlayer = BOARD_PLAYER1;
 	return ret;
 }
 
@@ -83,5 +90,41 @@ void drawBoard(Board* board) {
 		printf("%s\n%s\n", scratchBuffer, boardMiddleLine);
 	}
 	drawRow(&board->cells[(BOARD_HEIGHT - 1) * BOARD_WIDTH], ARRAYSIZE(scratchBuffer), scratchBuffer);
-	printf("%s\n%s\n\n\n", scratchBuffer, boardBottomLine);
+	printf("%s\n%s\n", scratchBuffer, boardBottomLine);
+	printf(" 0 1 2 3 4 5 6\n\n\n");
+}
+
+char currentTurn(Board* board) {
+	return board->currrentPlayer;
+}
+
+bool isColumnFull(Board* board, int column) {
+	return board->cells[column] == BOARD_EMPTY;
+}
+
+bool placeInColumn(Board* board, int column) {
+	if (column < 0 || column >= BOARD_WIDTH) {
+		return false;
+	}
+	for (int row = BOARD_HEIGHT - 1; row >= 0; row--) {
+		if (board->cells[column + row * BOARD_WIDTH] == BOARD_EMPTY) {
+			board->cells[column + row * BOARD_WIDTH] = board->currrentPlayer;
+			toggleCurrentPlayer(board);
+			return true;
+		}
+	}
+	return false;
+}
+
+void toggleCurrentPlayer(Board* board) {
+	if (board->currrentPlayer == BOARD_PLAYER1) {
+		board->currrentPlayer = BOARD_PLAYER2;
+	}
+	else {
+		board->currrentPlayer = BOARD_PLAYER1;
+	}
+}
+
+char getWinner(Board* board) {
+	return BOARD_EMPTY;
 }

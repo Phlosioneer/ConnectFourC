@@ -19,8 +19,10 @@ Board* newBoard(void);
 void freeBoard(Board* board);
 
 void drawBoard(Board* board);
-
-
+bool placeInColumn(Board* board, int column);
+bool isColumnFull(Board* board, int column);
+char getWinner(Board* board);
+char currentTurn(Board* board);
 
 #endif // !GRID_H
 
