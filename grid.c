@@ -125,6 +125,71 @@ void toggleCurrentPlayer(Board* board) {
 	}
 }
 
+bool checkPieces(char* pieces) {
+	if (pieces[0] == BOARD_EMPTY) { return false; }
+	if (pieces[0] != pieces[1]) { return false; }
+	if (pieces[0] != pieces[2]) { return false; }
+	if (pieces[0] != pieces[3]) { return false; }
+	return true;
+}
+
+char getCell(Board* board, int column, int row) {
+	if (row >= BOARD_HEIGHT || column >= BOARD_WIDTH) {
+		printf("Out of bounds access: (c: %d, r: %d)", column, row);
+		exit(-1);
+	}
+	return board->cells[column + row * BOARD_WIDTH];
+}
+
 char getWinner(Board* board) {
+	char pieces[4];
+	// Horizontal
+	for (int column = 0; column < BOARD_WIDTH - 3; column++) {
+		for (int row = 0; row < BOARD_HEIGHT; row++) {
+			for (int offset = 0; offset < 4; offset++) {
+				pieces[offset] = getCell(board, column + offset, row);
+			}
+			if (checkPieces(pieces)) {
+				return pieces[0];
+			}
+		}
+	}
+
+	// Vertical
+	for (int row = 0; row < BOARD_HEIGHT - 3; row++) {
+		for (int column = 0; column < BOARD_WIDTH; column++) {
+			for (int offset = 0; offset < 4; offset++) {
+				pieces[offset] = getCell(board, column, row + offset);
+			}
+			if (checkPieces(pieces)) {
+				return pieces[0];
+			}
+		}
+	}
+
+	// Diagonal top-left to bottom-right (+, +)
+	for (int column = 0; column < BOARD_WIDTH - 3; column++) {
+		for (int row = 0; row < BOARD_HEIGHT - 3; row++) {
+			for (int offset = 0; offset < 4; offset++) {
+				pieces[offset] = getCell(board, column + offset, row + offset);
+			}
+			if (checkPieces(pieces)) {
+				return pieces[0];
+			}
+		}
+	}
+
+	// Diagonal bottom-left to top-right (-, +)
+	for (int column = 0; column < BOARD_WIDTH - 4; column++) {
+		for (int row = BOARD_HEIGHT - 1; row >= 3; row--) {
+			for (int offset = 0; offset < 4; offset++) {
+				pieces[offset] = getCell(board, column + offset, row - offset);
+			}
+			if (checkPieces(pieces)) {
+				return pieces[0];
+			}
+		}
+	}
+
 	return BOARD_EMPTY;
 }
